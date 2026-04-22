@@ -21,7 +21,11 @@
       "Bash(gh auth *)",
       "Bash(git add *)",
       "Bash(git commit *)",
-      "Bash(git init *)"
+      "Bash(git init *)",
+      "Bash(gh repo *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" https://taskshelf.vercel.app/)",
+      "Bash(git config *)",
+      "Bash(git push *)"
     ]
   }
 }

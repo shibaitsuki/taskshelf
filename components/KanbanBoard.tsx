@@ -19,11 +19,15 @@ import { fetchTasks, updateTask, buildTree } from '@/lib/tasks';
 import KanbanColumn from './KanbanColumn';
 import TaskModal from './TaskModal';
 import TaskCard from './TaskCard';
-import { RefreshCw } from 'lucide-react';
+import { RefreshCw, LogOut } from 'lucide-react';
+import { supabase } from '@/lib/supabase';
+import type { User } from '@supabase/supabase-js';
 
 export default function KanbanBoard() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<User | null>(null);
+  const [authChecked, setAuthChecked] = useState(false);
 
   const [modalOpen, setModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
@@ -44,7 +48,23 @@ export default function KanbanBoard() {
     }
   }, []);
 
-  useEffect(() => { load(); }, [load]);
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      if (!data.session) {
+        window.location.href = '/login';
+      } else {
+        setUser(data.session.user);
+        setAuthChecked(true);
+      }
+    });
+  }, []);
+
+  useEffect(() => { if (authChecked) load(); }, [load, authChecked]);
+
+  async function handleLogout() {
+    await supabase.auth.signOut();
+    window.location.href = '/login';
+  }
 
   const tasksByPriority = (priority: Priority): Task[] => {
     const flat = tasks.filter(t => t.priority === priority);
@@ -149,18 +169,31 @@ export default function KanbanBoard() {
     ? { ...activeTask, subtasks: buildTree(tasks.filter(t => t.priority === activeTask.priority)).find(t => t.id === activeTask.id)?.subtasks }
     : null;
 
+  if (!authChecked) return null;
+
   return (
     <div className="flex flex-col h-full">
       <header className="flex items-center justify-between px-4 py-3 bg-white border-b shadow-sm">
         <h1 className="text-lg font-bold text-gray-800">Taskshelf</h1>
-        <button
-          onClick={load}
-          disabled={loading}
-          className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700 disabled:opacity-50"
-        >
-          <RefreshCw size={15} className={loading ? 'animate-spin' : ''} />
-          <span className="hidden sm:inline">更新</span>
-        </button>
+        <div className="flex items-center gap-3">
+          <span className="hidden sm:block text-xs text-gray-400">{user?.email}</span>
+          <button
+            onClick={load}
+            disabled={loading}
+            className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700 disabled:opacity-50"
+          >
+            <RefreshCw size={15} className={loading ? 'animate-spin' : ''} />
+            <span className="hidden sm:inline">更新</span>
+          </button>
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-red-500 transition-colors"
+            title="ログアウト"
+          >
+            <LogOut size={15} />
+            <span className="hidden sm:inline">ログアウト</span>
+          </button>
+        </div>
       </header>
 
       {loading && tasks.length === 0 ? (
