@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --no-src-dir --import-alias \"@/*\" --yes)",
+      "Read(//c/Users/User/MyProjects/**)",
+      "Bash(npx create-next-app@latest taskshelf-app --typescript --tailwind --eslint --app --no-src-dir --import-alias \"@/*\" --yes)",
+      "Bash(cp -r /c/Users/User/MyProjects/taskshelf-app/. /c/Users/User/MyProjects/Taskshelf/)",
+      "Bash(rm -rf /c/Users/User/MyProjects/taskshelf-app)",
+      "Bash(cp -r /c/Users/User/MyProjects/taskshelf-app/app /c/Users/User/MyProjects/Taskshelf/)",
+      "Bash(cp -r /c/Users/User/MyProjects/taskshelf-app/public /c/Users/User/MyProjects/Taskshelf/)",
+      "Bash(cp /c/Users/User/MyProjects/taskshelf-app/package.json /c/Users/User/MyProjects/Taskshelf/)",
+      "Bash(cp /c/Users/User/MyProjects/taskshelf-app/package-lock.json /c/Users/User/MyProjects/Taskshelf/)",
+      "Bash(cp /c/Users/User/MyProjects/taskshelf-app/tsconfig.json /c/Users/User/MyProjects/Taskshelf/)",
+      "Bash(npm install *)",
+      "Bash(npx tsc *)",
+      "Bash(npm run *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000)",
+      "Bash(curl -s -X POST https://dxbxihymqiizcxgaymwh.supabase.co/rest/v1/tasks -H 'apikey: sb_publishable_JGOSOHWIDiH-rKZpsXAk5w_DoehrFBL' -H 'Authorization: Bearer sb_publishable_JGOSOHWIDiH-rKZpsXAk5w_DoehrFBL' -H 'Content-Type: application/json' -H 'Prefer: return=representation' -d '{\"title\":\"test\",\"priority\":\"medium\",\"status\":\"todo\",\"position\":0}')",
+      "Bash(curl -s -X POST https://dxbxihymqiizcxgaymwh.supabase.co/rest/v1/tasks -H 'apikey: sb_publishable_JGOSOHWIDiH-rKZpsXAk5w_DoehrFBL' -H 'Authorization: Bearer sb_publishable_JGOSOHWIDiH-rKZpsXAk5w_DoehrFBL' -H 'Content-Type: application/json' -H 'Prefer: return=representation' -d '{\"title\":\"テスト\",\"priority\":\"medium\",\"status\":\"todo\",\"position\":0}')",
+      "Bash(curl -s -X POST https://dxbxihymqiizcxgaymwh.supabase.co/rest/v1/tasks -H 'apikey: sb_publishable_JGOSOHWIDiH-rKZpsXAk5w_DoehrFBL' -H 'Authorization: Bearer sb_publishable_JGOSOHWIDiH-rKZpsXAk5w_DoehrFBL' -H 'Content-Type: application/json' -H 'Prefer: return=representation' --data-raw '{\"title\":\"test\",\"priority\":\"medium\",\"status\":\"todo\",\"position\":0}')",
+      "Bash(gh auth *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git init *)"
+    ]
+  }
+}
